@@ -23,7 +23,19 @@ func index() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Awesome</title><script src=\"https://unpkg.com/htmx.org@1.9.6\"></script><link rel=\"stylesheet\" href=\"/static/index.css\"></head><body><h1>Hello World</h1><button hx-get=\"/hello\" hx-target=\"#holder\">Click Here</button><div id=\"holder\"></div></body></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Awesome</title><script src=\"https://unpkg.com/htmx.org@1.9.6\"></script><link rel=\"stylesheet\" href=\"/static/index.css\"><link href=\"/static/output.css\" rel=\"stylesheet\"></head><body><h1>Hello World</h1><button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded\" hx-get=\"/hello\" hx-target=\"#holder\">Click Here</button><div id=\"holder\"></div><h1>Hello World 2</h1>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = wowz().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = goo().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -10,11 +10,15 @@ templ index(){
     <title>Awesome</title>
     <script src="https://unpkg.com/htmx.org@1.9.6"></script>
     <link rel="stylesheet" href="/static/index.css"/>
+    <link href="/static/output.css" rel="stylesheet" />
     </head>
     <body>
         <h1>Hello World</h1>
-        <button hx-get="/hello" hx-target="#holder">Click Here</button>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" hx-get="/hello" hx-target="#holder">Click Here</button>
         <div id="holder"></div>
+        <h1>Hello World 2</h1>
+        @wowz()
+        @goo()
     </body>
     </html>
 }
