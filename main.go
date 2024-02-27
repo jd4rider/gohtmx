@@ -3,9 +3,11 @@ package main
 import (
 	"embed"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/a-h/templ"
+	"github.com/joho/godotenv"
 )
 
 //go:embed static
@@ -28,6 +30,11 @@ func main() {
 	//for i := 0; i < len(bibleIds); i++ {
 	//	fmt.Println(bibleIds[i].Name)
 	//}
+	err := godotenv.Load(".env")
+
+	if err != nil {
+		log.Fatalf("Error loading .env file: %s", err)
+	}
 
 	component := hello("jd4rider")
 

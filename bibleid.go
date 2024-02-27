@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -20,7 +21,7 @@ func bibleid() []bibleId {
 		log.Fatal(err)
 	}
 
-	req.Header.Set("api-key", "bdc4793d14abbbfafa9b6258c48c6d10")
+	req.Header.Set("api-key", os.Getenv("API_KEY"))
 
 	res, getErr := bibleClient.Do(req)
 	if getErr != nil {
