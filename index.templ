@@ -1,24 +1,18 @@
 package main
 
-
-templ index(){
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-    <meta charset="UTF-8"></meta>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-    <title>Awesome</title>
-    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
-    <link rel="stylesheet" href="/static/index.css"/>
-    <link href="/static/output.css" rel="stylesheet" />
-    </head>
-    <body>
-        <h1>Hello World</h1>
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" hx-get="/hello" hx-target="#holder">Click Here</button>
-        <div id="holder"></div>
-        <h1>Hello World 2</h1>
-        @wowz()
-        @goo()
-    </body>
-    </html>
+templ index() {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>Awesome</title>
+			<script src="https://unpkg.com/htmx.org@1.9.6"></script>
+			<link rel="stylesheet" href="/static/index.css"/>
+			<link href="/static/output.css" rel="stylesheet"/>
+		</head>
+		<body>
+			@biblepicker()
+		</body>
+	</html>
 }
