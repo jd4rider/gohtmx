@@ -1,17 +1,14 @@
 package main
 
 import (
-	"embed"
-	"fmt"
-	"log"
+	"github.com/a-h/templ"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/log"
+	"github.com/gofiber/fiber/v2/middleware/adaptor"
 	"net/http"
 
-	"github.com/a-h/templ"
 	"github.com/joho/godotenv"
 )
-
-//go:embed static
-var static embed.FS
 
 type jsonbody struct {
 	Body string `json:"body.data"`
@@ -23,28 +20,34 @@ type bibleId struct {
 }
 
 func main() {
-
-	//bibleIds := bibleid()
-	//fmt.Println(bibleData["name"].(string))
-	//fmt.Println(bibleIds)
-	//for i := 0; i < len(bibleIds); i++ {
-	//	fmt.Println(bibleIds[i].Name)
-	//}
+	app := fiber.New()
 	err := godotenv.Load(".env")
 
 	if err != nil {
 		log.Fatalf("Error loading .env file: %s", err)
 	}
 
-	component := hello("jd4rider")
-
 	index := index()
 
-	http.Handle("/static/", http.FileServer(http.FS(static)))
-	http.Handle("/hello", templ.Handler(component))
-	http.Handle("/", templ.Handler(index))
+	app.Get("/", func(c *fiber.Ctx) error {
+		return Render(c, index)
+	})
 
-	fmt.Println("Listening on :3000")
-	fmt.Println("Press Ctrl+C to quit")
-	http.ListenAndServe(":3000", nil)
+	app.Static("/static", "./static")
+
+	app.Use(NotFoundMiddleware)
+
+	log.Fatal(app.Listen(":3000"))
+}
+
+func NotFoundMiddleware(c *fiber.Ctx) error {
+	return Render(c, NotFound(), templ.WithStatus(http.StatusNotFound))
+}
+
+func Render(c *fiber.Ctx, component templ.Component, options ...func(*templ.ComponentHandler)) error {
+	componentHandler := templ.Handler(component)
+	for _, o := range options {
+		o(componentHandler)
+	}
+	return adaptor.HTTPHandler(componentHandler)(c)
 }
