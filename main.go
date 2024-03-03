@@ -47,6 +47,20 @@ func main() {
 		//return c.SendString("<div>You have selected the following Bible: " + payload.Bibleselect + "</div>")
 	})
 
+	app.Post("/chapterselect", func(c *fiber.Ctx) error {
+		payload := struct {
+			Bibleselect string `json:"bibleselect"`
+			Bookselect  string `json:"bookselect"`
+		}{}
+		if err := c.BodyParser(&payload); err != nil {
+			return err
+		}
+
+		chapterpicker := templates.Chapterpicker(payload.Bibleselect, payload.Bookselect)
+		return Render(c, chapterpicker)
+		//return c.SendString("<div>You have selected the following Bible: " + payload.Bibleselect + "</div>")
+	})
+
 	app.Post("/biblecontent", func(c *fiber.Ctx) error {
 		payload := struct {
 			Bibid  string `json:"bibid"`
@@ -57,6 +71,21 @@ func main() {
 		}
 
 		return c.SendString(templates.Biblecontent(payload.Bibid, payload.Chapid))
+	})
+
+	app.Post("/biblecontentfinal", func(c *fiber.Ctx) error {
+		payload := struct {
+			Bibleselect   string `json:"bibleselect"`
+			Bookselect    string `json:"bookselect"`
+			Chapterselect string `json:"chapterselect"`
+		}{}
+		if err := c.BodyParser(&payload); err != nil {
+			return err
+		}
+
+		//chapid := payload.Bookselect + "." + payload.Chapterselect
+
+		return c.SendString(templates.Biblecontent(payload.Bibleselect, payload.Chapterselect))
 	})
 
 	app.Static("/static", "./static")
