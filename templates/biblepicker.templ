@@ -1,17 +1,19 @@
-package main
+package templates
 
-templ biblepicker() {
-	<form class="w-full max-w-lg">
+templ Biblepicker() {
+	<br/>
+	<form class="w-full max-w-lg" hx-post="/bookselect" hx-target="#bookpicker">
 		<label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
-			Choose a Bible
+			Choose a Book
 		</label>
 		<div class="relative">
 			<select
 				class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
 				id="grid-state"
+				name="bibleselect"
 			>
-				for _, item := range bibleid() {
-					<option itemid={ item.Id }>{ item.Name }</option>
+				for _, item := range Bibleid() {
+					<option value={ item.Id }>{ item.Name }</option>
 				}
 			</select>
 			<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -20,5 +22,9 @@ templ biblepicker() {
 				</svg>
 			</div>
 		</div>
+		<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">
+			Submit
+		</button>
 	</form>
+	<div id="bookpicker"></div>
 }

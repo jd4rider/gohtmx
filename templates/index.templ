@@ -1,6 +1,6 @@
-package main
+package templates
 
-templ index() {
+templ Index() {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -11,7 +11,8 @@ templ index() {
 			<link href="/static/output.css" rel="stylesheet"/>
 		</head>
 		<body>
-			@biblepicker()
+			@Biblepicker()
+			<div id="biblecontent"></div>
 		</body>
 	</html>
 }
