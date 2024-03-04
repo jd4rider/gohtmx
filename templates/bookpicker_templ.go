@@ -11,7 +11,7 @@ import "io"
 import "bytes"
 
 import (
-	"fmt"
+// "fmt"
 )
 
 func Bookpicker(bibleId string) templ.Component {
@@ -35,7 +35,7 @@ func Bookpicker(bibleId string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" name=\"bibleselect\"><div class=\"relative\"><select class=\"block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500\" id=\"grid-state\" name=\"bookselect\" onchange=\"document.getElementById(&#39;bookpickerclick&#39;).click()\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" name=\"bibleselect\"><div class=\"relative\"><select class=\"block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500\" id=\"grid-state\" name=\"bookselect\" onchange=\"document.getElementById(&#39;bookpickerclick&#39;).click()\"><option disabled selected value=\"Select a Book of the Bible\">Select a Book of the Bible</option> ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -55,7 +55,7 @@ func Bookpicker(bibleId string) templ.Component {
 			var templ_7745c5c3_Var2 string
 			templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(item.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/bookpicker.templ`, Line: 22, Col: 43}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/bookpicker.templ`, Line: 20, Col: 41}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 			if templ_7745c5c3_Err != nil {
@@ -66,15 +66,7 @@ func Bookpicker(bibleId string) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</select><div class=\"pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700\"><svg class=\"fill-current h-4 w-4\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 20 20\"><path d=\"M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z\"></path></svg></div></div><button id=\"bookpickerclick\" type=\"submit\" class=\"invisible\" type=\"button\" hidden>Submit</button></form></div><div id=\"chapterpicker\" hx-post=\"/biblecontent\" hx-trigger=\"load\" hx-vals=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(fmt.Sprintf("{\"bibid\" : \"%s\", \"chapid\" : \"%s.1\"}", bibleId, Bookid(bibleId)[0].Id)))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-target=\"#biblecontent\"></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</select><div class=\"pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700\"><svg class=\"fill-current h-4 w-4\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 20 20\"><path d=\"M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z\"></path></svg></div></div><button id=\"bookpickerclick\" type=\"submit\" class=\"invisible\" type=\"button\" hidden>Submit</button></form></div><div id=\"chapterpicker\"></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

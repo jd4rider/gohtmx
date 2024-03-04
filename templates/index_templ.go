@@ -23,7 +23,7 @@ func Index() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Awesome</title><script src=\"https://unpkg.com/htmx.org@1.9.6\"></script><link href=\"/static/output.css\" rel=\"stylesheet\"></head><body>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Back to the Bible</title><link rel=\"icon\" type=\"image/x-icon\" href=\"/static/favicon.ico\"><script src=\"https://unpkg.com/htmx.org@1.9.6\"></script><link href=\"/static/output.css\" rel=\"stylesheet\"></head><body><div class=\"grid min-h-screen items-start justify-start gap-0.5 text-sm md:text-base\"><div class=\"container grid gap-4 px-4 py-4 md:py-8\"><div class=\"flex items-center space-x-4\"><a class=\"flex items-center space-x-2\" href=\"/\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"w-6 h-6\"><path d=\"M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z\"></path> <path d=\"M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z\"></path></svg> <span class=\"font-semibold\">Back to the Bible</span></a></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -31,7 +31,7 @@ func Index() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"biblecontent\" class=\"max-h-screen overflow-y-auto\"></div></body></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"biblecontent\" class=\"max-h-screen overflow-y-auto\"></div></div></div></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

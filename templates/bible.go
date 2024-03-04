@@ -179,7 +179,9 @@ func Chapid(biblId string, bookId string) []ChapId {
 	//fmt.Println(bibleData["name"].(string))
 	//chapIds.push(chapIds.shift())
 	//fmt.Println(shiftfirsttoend(chapIds))
-	chapIds = shiftfirsttoend(chapIds)
+	if chapIds[0].Name == "intro" {
+		chapIds = shiftfirsttoend(chapIds)
+	}
 	return chapIds
 }
 

@@ -23,7 +23,7 @@ func Biblepicker() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"biblepicker\"><br><form class=\"w-full max-w-lg\" hx-post=\"/bookselect\" hx-target=\"#bookpicker\" hx-swap=\"outerHTML\"><div id=\"biblepicker\"><label class=\"block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2\" for=\"grid-state\">Choose a Bible</label><div class=\"relative\"><select class=\"block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500\" id=\"grid-state\" name=\"bibleselect\" onchange=\"document.getElementById(&#39;biblepickerclick&#39;).click()\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"biblepicker\"><br><form class=\"w-full max-w-lg\" hx-post=\"/bookselect\" hx-target=\"#bookpicker\" hx-swap=\"outerHTML\"><div id=\"biblepicker\"><label class=\"block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2\" for=\"grid-state\">Choose a Bible</label><div class=\"relative\"><select class=\"block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500\" id=\"grid-state\" name=\"bibleselect\" onchange=\"document.getElementById(&#39;biblepickerclick&#39;).click()\"><option disabled selected value=\"Select a Version of the Bible\">Select a Version of the Bible</option> ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -43,7 +43,7 @@ func Biblepicker() templ.Component {
 			var templ_7745c5c3_Var2 string
 			templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(item.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/biblepicker.templ`, Line: 18, Col: 44}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/biblepicker.templ`, Line: 19, Col: 44}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 			if templ_7745c5c3_Err != nil {
