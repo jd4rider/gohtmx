@@ -185,8 +185,8 @@ func Chapid(biblId string, bookId string) []ChapId {
 
 func Biblecontent(bibleId string, chapId string) string {
 	url := fmt.Sprintf("https://api.scripture.api.bible/v1/bibles/%s/passages/%s?content-type=html&include-notes=false&include-titles=true&include-chapter-numbers=false&include-verse-numbers=true&include-verse-spans=false&use-org-id=false", bibleId, chapId)
-	fmt.Println(bibleId, chapId)
-	fmt.Println(url)
+	//fmt.Println(bibleId, chapId)
+	//fmt.Println(url)
 	bibleClient := http.Client{
 		Timeout: time.Second * 20,
 	}

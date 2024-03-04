@@ -9,6 +9,7 @@ import (
 	"github.com/jd4rider/GoHtmx/templates"
 	"github.com/joho/godotenv"
 	"net/http"
+	"os"
 )
 
 type jsonbody struct {
@@ -20,10 +21,13 @@ func main() {
 
 	//app.Use(helmet.New())
 
-	err := godotenv.Load(".env")
+	if os.Getenv("API_KEY") == "" {
 
-	if err != nil {
-		log.Fatalf("Error loading .env file: %s", err)
+		err := godotenv.Load(".env")
+
+		if err != nil {
+			log.Fatalf("Error loading .env file: %s", err)
+		}
 	}
 
 	index := templates.Index()
