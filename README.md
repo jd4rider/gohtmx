@@ -9,4 +9,4 @@ npm install
 npm run dev
 ```
 
-TODO: Make an app that works
+Working Bible app deployed here: https://gohtmx-thrumming-bird-8288.fly.dev/
