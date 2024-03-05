@@ -1,6 +1,6 @@
 package templates
 
-templ Biblepicker() {
+templ Biblepicker(langid string) {
 	<div id="biblepicker">
 		<br/>
 		<form class="w-full max-w-lg" hx-post="/bookselect" hx-target="#bookpicker" hx-swap="outerHTML">
@@ -16,7 +16,7 @@ templ Biblepicker() {
 						onchange="document.getElementById('biblepickerclick').click()"
 					>
 						<option disabled selected value="Select a Version of the Bible">Select a Version of the Bible</option>
-						for _, item := range Bibleid() {
+						for _, item := range Bibleid(langid) {
 							<option value={ item.Id }>{ item.Name }</option>
 						}
 					</select>

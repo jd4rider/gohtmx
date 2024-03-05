@@ -1,74 +1,49 @@
 package templates
 
+//class="block appearance-none w-full border-0 border-gray-200 text-gray-700 py-1.5 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
 templ Langpicker() {
-	<form class="w-full max-w-lg" hx-post="biblecontentfinal" hx-target="#biblecontent">
-		//<button
-		//	type="button"
-		//	role="combobox"
-		//	aria-controls="radix-:r7f:"
-		//	aria-expanded="false"
-		//	aria-autocomplete="none"
-		//	dir="ltr"
-		//	data-state="closed"
-		//	data-placeholder=""
-		//	class="h-10 w-full justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-gray-500 dark:text-gray-400 flex items-center space-x-2"
-		//>
-		//<span>English</span>
-		//<svg
-		//	xmlns="http://www.w3.org/2000/svg"
-		//	width="24"
-		//	height="24"
-		//	viewBox="0 0 24 24"
-		//	fill="none"
-		//	stroke="currentColor"
-		//	stroke-width="2"
-		//	stroke-linecap="round"
-		//	stroke-linejoin="round"
-		//	class="w-4 h-4"
-		//>
-		//	<path d="m6 9 6 6 6-6"></path>
-		//</svg>
-		//<svg
-		//	xmlns="http://www.w3.org/2000/svg"
-		//	width="24"
-		//	height="24"
-		//	viewBox="0 0 24 24"
-		//	fill="none"
-		//	stroke="currentColor"
-		//	stroke-width="2"
-		//	stroke-linecap="round"
-		//	stroke-linejoin="round"
-		//	class="h-4 w-4 opacity-50"
-		//	aria-hidden="true"
-		//>
-		//<path d="m6 9 6 6 6-6"></path>
-		//</svg>
-		//</button>
+	<form class="w-full max-w-sm" hx-post="bibleselect" hx-target="#biblepicker">
 		<input id="defaultlang" type="hidden" value="en" name="defaultlang"/>
-		<select
-			id="langselect"
-			name="langselect"
-			class="block appearance-none w-full border-0 border-gray-200 text-gray-700 py-1.5 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-		>
-			//<option value="en">English</option>
-			//<option value="es">Spanish</option>
-			//<option value="fr">French</option>
-			//<option value="de">German</option>
-			for _, item := range Languages() {
-				<option value={ item.id }>{ item.name }</option>
-			}
-		</select>
-		<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-			<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-				<path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>
-			</svg>
+		<div class="inline-block relative w-25">
+			<select
+				id="langselect"
+				name="langselect"
+				class="block appearance-none w-full bg-white border-0 border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
+				onchange="document.getElementById('langpickerclick').click()"
+			>
+				<option disabled selected value="Language">Language</option>
+				for _, item := range Languages() {
+					<option value={ item.id }>{ item.name }</option>
+				}
+			</select>
+			//<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+			//<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+			//<path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>
+			//</svg>
+			//</div>
+			<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+				<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path></svg>
+			</div>
 		</div>
+		<button id="langpickerclick" type="submit" class="invisible" type="button" hidden>
+			Submit
+		</button>
 	</form>
 	<script>
 	langconversion = { "aa": "aar", "ab": "abk", "af": "afr", "ak": "aka", "sq": "alb", "am": "amh", "ar": "ara", "an": "arg", "hy": "hye", "as": "asm", "av": "ava", "ae": "ave", "ay": "aym", "az": "aze", "ba": "bak", "bm": "bam", "eu": "eus", "be": "bel", "bn": "ben", "bh": "bih", "bi": "bis", "bo": "tib", "bs": "bos", "br": "bre", "bg": "bul", "my": "mya", "ca": "cat", "cs": "cze", "ch": "cha", "ce": "che", "zh": "zho", "cu": "chu", "cv": "chv", "kw": "cor", "co": "cos", "cr": "cre", "cy": "wel", "da": "dan", "de": "ger", "dv": "div", "nl": "dut", "dz": "dzo", "el": "gre", "en": "eng", "eo": "epo", "et": "est", "ee": "ewe", "fo": "fao", "fa": "per", "fj": "fij", "fi": "fin", "fr": "fra", "fy": "fry", "ff": "ful", "ka": "geo", "gd": "gla", "ga": "gle", "gl": "glg", "gv": "glv", "gn": "grn", "gu": "guj", "ht": "hat", "ha": "hau", "he": "heb", "hz": "her", "hi": "hin", "ho": "hmo", "hr": "hrv", "hu": "hun", "ig": "ibo", "is": "ice", "io": "ido", "ii": "iii", "iu": "iku", "ie": "ile", "ia": "ina", "id": "ind", "ik": "ipk", "it": "ita", "jv": "jav", "ja": "jpn", "kl": "kal", "kn": "kan", "ks": "kas", "kr": "kau", "kk": "kaz", "km": "khm", "ki": "kik", "rw": "kin", "ky": "kir", "kv": "kom", "kg": "kon", "ko": "kor", "kj": "kua", "ku": "kur", "lo": "lao", "la": "lat", "lv": "lav", "li": "lim", "ln": "lin", "lt": "lit", "lb": "ltz", "lu": "lub", "lg": "lug", "mk": "mkd", "mh": "mah", "ml": "mal", "mi": "mri", "mr": "mar", "ms": "may", "mg": "mlg", "mt": "mlt", "mn": "mon", "na": "nau", "nv": "nav", "nr": "nbl", "nd": "nde", "ng": "ndo", "ne": "nep", "nn": "nno", "nb": "nob", "no": "nor", "ny": "nya", "oc": "oci", "oj": "oji", "or": "ori", "om": "orm", "os": "oss", "pa": "pan", "pi": "pli", "pl": "pol", "pt": "por", "ps": "pus", "qu": "que", "rm": "roh", "ro": "ron", "rn": "run", "ru": "rus", "sg": "sag", "sa": "san", "si": "sin", "sk": "slk", "sl": "slv", "se": "sme", "sm": "smo", "sn": "sna", "sd": "snd", "so": "som", "st": "sot", "es": "spa", "sc": "srd", "sr": "srp", "ss": "ssw", "su": "sun", "sw": "swa", "sv": "swe", "ty": "tah", "ta": "tam", "tt": "tat", "te": "tel", "tg": "tgk", "tl": "tgl", "th": "tha", "ti": "tir", "to": "ton", "tn": "tsn", "ts": "tso", "tk": "tuk", "tr": "tur", "tw": "twi", "ug": "uig", "uk": "ukr", "ur": "urd", "uz": "uzb", "ve": "ven", "vi": "vie", "vo": "vol", "wa": "wln", "wo": "wol", "xh": "xho", "yi": "yid", "yo": "yor", "za": "zha", "zu": "zul" };
-	window.onload = function(){
-	if (navigator.language.includes('-')) document.getElementById('langselect').value = langconversion[navigator.language.split("-")[0]]
-	else document.getElementById('langselect').value = langconversion[navigator.language]
+	
+	function setValue() {
+		if (navigator.language.includes('-')) document.getElementById('langselect').value = langconversion[navigator.language.split("-")[0]]
+		else document.getElementById('langselect').value = langconversion[navigator.language]
+		if (document.getElementById('langselect').value == 'Language' || document.getElementById('langselect').value == '') {
+			console.log("Language Couldn't be determined, defaulting to English")
+			document.getElementById('langselect').value = 'eng'
+		}
+	}
+
+	window.onload = async function(){
+		await setValue()
+		document.getElementById('langpickerclick').click()
 	}
 	</script>
 }

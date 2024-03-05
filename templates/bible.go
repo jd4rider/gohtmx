@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"sort"
 	"time"
 )
 
@@ -91,11 +92,16 @@ func Languages() []Lang {
 	}
 	//fmt.Println(bibleData["name"].(string))
 
-	return removeDuplicate(langIds)
+	dupremlangs := removeDuplicate(langIds)
+
+	sort.Slice(dupremlangs, func(i, j int) bool {
+		return dupremlangs[i].name < dupremlangs[j].name
+	})
+	return dupremlangs
 }
 
-func Bibleid() []BibleId {
-	url := "https://api.scripture.api.bible/v1/bibles"
+func Bibleid(langid string) []BibleId {
+	url := "https://api.scripture.api.bible/v1/bibles?language=" + langid
 
 	bibleClient := http.Client{
 		Timeout: time.Second * 20,

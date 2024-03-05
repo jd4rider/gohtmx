@@ -38,6 +38,19 @@ func main() {
 
 	//bookpicker := bookpicker()
 
+	app.Post("/bibleselect", func(c *fiber.Ctx) error {
+		payload := struct {
+			Langselect string `json:"langselect"`
+		}{}
+		if err := c.BodyParser(&payload); err != nil {
+			return err
+		}
+
+		biblepicker := templates.Biblepicker(payload.Langselect)
+		return Render(c, biblepicker)
+		//return c.SendString("<div>You have selected the following Bible: " + payload.Bibleselect + "</div>")
+	})
+
 	app.Post("/bookselect", func(c *fiber.Ctx) error {
 		payload := struct {
 			Bibleselect string `json:"bibleselect"`
