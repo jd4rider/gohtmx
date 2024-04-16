@@ -6,6 +6,10 @@
 app = 'gohtmx-thrumming-bird-8288'
 primary_region = 'sea'
 
+[mounts]
+  source = "data"
+  destination = "/data"
+
 [build]
 
 [http_service]
