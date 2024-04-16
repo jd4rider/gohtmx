@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for gohtmx-thrumming-bird-8288 on 2024-03-03T17:07:20-07:00
+# fly.toml app configuration file generated for gohtmx-bible on 2024-04-16T01:05:03-06:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'gohtmx-thrumming-bird-8288'
+app = 'gohtmx-bible'
 primary_region = 'sea'
 
 [build]
