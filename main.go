@@ -9,7 +9,7 @@ import (
 	//"database/sql"
 	"github.com/jd4rider/GoHtmx/templates"
 	"github.com/joho/godotenv"
-	_ "github.com/tursodatabase/go-libsql"
+	//_ "github.com/tursodatabase/go-libsql"
 	"net/http"
 	"os"
 )

@@ -4,7 +4,8 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	_ "github.com/tursodatabase/go-libsql"
+	//_ "github.com/mattn/go-sqlite3"
+	_ "github.com/tursodatabase/libsql-client-go/libsql"
 	"io"
 	"log"
 	"net/http"
@@ -52,7 +53,7 @@ func removeDuplicate[T comparable](sliceList []T) []T {
 
 func Languages() []Lang {
 	bibleapi = false
-	dbName = os.Getenv("DATABASE_URL")
+	dbName = fmt.Sprintf("%s?authToken=%s", os.Getenv("TURSO_DATABASE_URL"), os.Getenv("TURSO_AUTH_TOKEN"))
 
 	langIds := []Lang{}
 
@@ -103,7 +104,7 @@ func Languages() []Lang {
 			})
 		}
 	}
-	dbName := "file:./test.db"
+	//dbName := "file:./test.db"
 
 	db, err := sql.Open("libsql", dbName)
 	if err != nil {

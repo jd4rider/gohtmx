@@ -3,12 +3,8 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'gohtmx-thrumming-bird-8288'
+app = 'gohtmx-bible'
 primary_region = 'sea'
-
-[mounts]
-  source = "data"
-  destination = "/data"
 
 [build]
 
