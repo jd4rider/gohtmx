@@ -35,6 +35,7 @@ var (
 	language_code string
 	language      string
 	bibleapi      bool
+	dbName        string
 )
 
 func removeDuplicate[T comparable](sliceList []T) []T {
@@ -51,6 +52,7 @@ func removeDuplicate[T comparable](sliceList []T) []T {
 
 func Languages() []Lang {
 	bibleapi = false
+	dbName = os.Getenv("DATABASE_URL")
 
 	langIds := []Lang{}
 
@@ -193,7 +195,7 @@ func Bibleid(langid string) []BibleId {
 		}
 	}
 	//fmt.Println(bibleData["name"].(string))
-	dbName := "file:./test.db"
+	//dbName := "file:./test.db"
 
 	db, err := sql.Open("libsql", dbName)
 	if err != nil {
@@ -278,7 +280,7 @@ func Bookid(biblId string) []BookId {
 		//fmt.Println(bibleData["name"].(string))
 	}
 
-	dbName := "file:./test.db"
+	//dbName := "file:./test.db"
 
 	db, err := sql.Open("libsql", dbName)
 	if err != nil {
@@ -363,7 +365,7 @@ func Chapid(biblId string, bookId string) []ChapId {
 		}
 	}
 
-	dbName := "file:./test.db"
+	//dbName := "file:./test.db"
 
 	db, err := sql.Open("libsql", dbName)
 	if err != nil {
@@ -462,7 +464,7 @@ func Biblecontent(bibleId string, chapId string) string {
 
 	chapterId := strings.Split(chapId, ".")[1]
 
-	dbName := "file:./test.db"
+	//dbName := "file:./test.db"
 
 	db, err := sql.Open("libsql", dbName)
 	if err != nil {
