@@ -6,8 +6,7 @@ import (
 	"github.com/gofiber/fiber/v2/log"
 	"github.com/gofiber/fiber/v2/middleware/adaptor"
 	//"github.com/gofiber/helmet"
-	"database/sql"
-	"fmt"
+	//"database/sql"
 	"github.com/jd4rider/GoHtmx/templates"
 	"github.com/joho/godotenv"
 	_ "github.com/tursodatabase/go-libsql"
@@ -20,36 +19,36 @@ type jsonbody struct {
 }
 
 var (
-	id   int
-	name string
+	language_code string
+	language      string
 )
 
 func main() {
 
-	dbName := "file:./test.db"
+	//dbName := "file:./test.db"
 
-	db, err := sql.Open("libsql", dbName)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "failed to open db %s", err)
-		os.Exit(1)
-	}
-	rows, err := db.Query("select id, name from translations")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer rows.Close()
-	for rows.Next() {
-		err := rows.Scan(&id, &name)
-		if err != nil {
-			log.Fatal(err)
-		}
-		log.Info(id, name)
-	}
-	err = rows.Err()
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
+	//db, err := sql.Open("libsql", dbName)
+	//if err != nil {
+	//	log.Fatal("failed to open db %s", err)
+	//	os.Exit(1)
+	//}
+	//rows, err := db.Query("select language_code, language from translations")
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+	//defer rows.Close()
+	//for rows.Next() {
+	//	err := rows.Scan(&language_code, &language)
+	//	if err != nil {
+	//		log.Fatal(err)
+	//	}
+	//	log.Info(language_code, language)
+	//}
+	//err = rows.Err()
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+	//defer db.Close()
 
 	app := fiber.New()
 

@@ -1,8 +1,10 @@
 package templates
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
+	_ "github.com/tursodatabase/go-libsql"
 	"io"
 	"log"
 	"net/http"
@@ -28,6 +30,12 @@ type BookId = BibleId
 
 type ChapId = BibleId
 
+var (
+	language_code string
+	language      string
+	bibleapi      bool
+)
+
 func removeDuplicate[T comparable](sliceList []T) []T {
 	allKeys := make(map[T]bool)
 	list := []T{}
@@ -41,55 +49,86 @@ func removeDuplicate[T comparable](sliceList []T) []T {
 }
 
 func Languages() []Lang {
-	url := "https://api.scripture.api.bible/v1/bibles"
-
-	bibleClient := http.Client{
-		Timeout: time.Second * 20,
-	}
-
-	req, err := http.NewRequest(http.MethodGet, url, nil)
-	if err != nil {
-		log.Fatal(err)
-		return []Lang{}
-	}
-
-	req.Header.Set("api-key", os.Getenv("API_KEY"))
-
-	res, getErr := bibleClient.Do(req)
-	if getErr != nil {
-		log.Fatal(getErr)
-		return []Lang{}
-	}
-
-	if res.Body != nil {
-		defer res.Body.Close()
-	}
-
-	body, readErr := io.ReadAll(res.Body)
-	if readErr != nil {
-		log.Fatal(readErr)
-		return []Lang{}
-	}
-
-	var body1 map[string]interface{}
-	jsonErr := json.Unmarshal(body, &body1)
-	if jsonErr != nil {
-		log.Fatal(jsonErr)
-		return []Lang{}
-	}
-	bibleData := body1["data"].([]interface{}) //[0].(map[string]interface{})
+	bibleapi = false
 
 	langIds := []Lang{}
-	for i := 0; i < len(bibleData); i++ {
-		//if bibleData[i].(map[string]interface{})["language"].(map[string]interface{})["name"].(string) == "English" {
-		//fmt.Println(bibleData[i].(map[string]interface{})["name"].(string))
-		//}
+
+	if bibleapi {
+		url := "https://api.scripture.api.bible/v1/bibles"
+
+		bibleClient := http.Client{
+			Timeout: time.Second * 20,
+		}
+
+		req, err := http.NewRequest(http.MethodGet, url, nil)
+		if err != nil {
+			log.Println(err)
+			//return []Lang{}
+		}
+
+		req.Header.Set("api-key", os.Getenv("API_KEY"))
+
+		res, getErr := bibleClient.Do(req)
+		if getErr != nil {
+			log.Println(getErr)
+			//return []Lang{}
+		}
+
+		if res.Body != nil {
+			defer res.Body.Close()
+		}
+
+		body, readErr := io.ReadAll(res.Body)
+		if readErr != nil {
+			log.Println(readErr)
+			//return []Lang{}
+		}
+
+		var body1 map[string]interface{}
+		jsonErr := json.Unmarshal(body, &body1)
+		if jsonErr != nil {
+			log.Println(jsonErr)
+			//return []Lang{}
+		}
+		bibleData := body1["data"].([]interface{}) //[0].(map[string]interface{})
+
+		for i := 0; i < len(bibleData); i++ {
+			langIds = append(langIds, Lang{
+				id:        bibleData[i].(map[string]interface{})["language"].(map[string]interface{})["id"].(string),
+				name:      bibleData[i].(map[string]interface{})["language"].(map[string]interface{})["name"].(string),
+				nameLocal: bibleData[i].(map[string]interface{})["language"].(map[string]interface{})["nameLocal"].(string),
+			})
+		}
+	}
+	dbName := "file:./test.db"
+
+	db, err := sql.Open("libsql", dbName)
+	if err != nil {
+		log.Fatal(err)
+		//os.Exit(1)
+	}
+	rows, err := db.Query("select language_code, language from translations")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+		err := rows.Scan(&language_code, &language)
+		if err != nil {
+			log.Fatal(err)
+		}
+		//log.Println(language_code, language)
 		langIds = append(langIds, Lang{
-			id:        bibleData[i].(map[string]interface{})["language"].(map[string]interface{})["id"].(string),
-			name:      bibleData[i].(map[string]interface{})["language"].(map[string]interface{})["name"].(string),
-			nameLocal: bibleData[i].(map[string]interface{})["language"].(map[string]interface{})["nameLocal"].(string),
+			id:        language_code,
+			name:      language,
+			nameLocal: language,
 		})
 	}
+	err = rows.Err()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
 	//fmt.Println(bibleData["name"].(string))
 
 	dupremlangs := removeDuplicate(langIds)
@@ -101,55 +140,86 @@ func Languages() []Lang {
 }
 
 func Bibleid(langid string) []BibleId {
-	url := "https://api.scripture.api.bible/v1/bibles?language=" + langid
-
-	bibleClient := http.Client{
-		Timeout: time.Second * 20,
-	}
-
-	req, err := http.NewRequest(http.MethodGet, url, nil)
-	if err != nil {
-		log.Fatal(err)
-		return []BibleId{}
-	}
-
-	req.Header.Set("api-key", os.Getenv("API_KEY"))
-
-	res, getErr := bibleClient.Do(req)
-	if getErr != nil {
-		log.Fatal(getErr)
-		return []BibleId{}
-	}
-
-	if res.Body != nil {
-		defer res.Body.Close()
-	}
-
-	body, readErr := io.ReadAll(res.Body)
-	if readErr != nil {
-		log.Fatal(readErr)
-		return []BibleId{}
-	}
-
-	var body1 map[string]interface{}
-	jsonErr := json.Unmarshal(body, &body1)
-	if jsonErr != nil {
-		log.Fatal(jsonErr)
-		return []BibleId{}
-	}
-	bibleData := body1["data"].([]interface{}) //[0].(map[string]interface{})
-
 	bibleIds := []BibleId{}
-	for i := 0; i < len(bibleData); i++ {
-		//if bibleData[i].(map[string]interface{})["language"].(map[string]interface{})["name"].(string) == "English" {
-		//fmt.Println(bibleData[i].(map[string]interface{})["name"].(string))
-		//}
-		bibleIds = append(bibleIds, BibleId{
-			Id:   bibleData[i].(map[string]interface{})["id"].(string),
-			Name: bibleData[i].(map[string]interface{})["name"].(string),
-		})
+
+	if bibleapi {
+		url := "https://api.scripture.api.bible/v1/bibles?language=" + langid
+
+		bibleClient := http.Client{
+			Timeout: time.Second * 20,
+		}
+
+		req, err := http.NewRequest(http.MethodGet, url, nil)
+		if err != nil {
+			log.Fatal(err)
+			return []BibleId{}
+		}
+
+		req.Header.Set("api-key", os.Getenv("API_KEY"))
+
+		res, getErr := bibleClient.Do(req)
+		if getErr != nil {
+			log.Fatal(getErr)
+			return []BibleId{}
+		}
+
+		if res.Body != nil {
+			defer res.Body.Close()
+		}
+
+		body, readErr := io.ReadAll(res.Body)
+		if readErr != nil {
+			log.Fatal(readErr)
+			return []BibleId{}
+		}
+
+		var body1 map[string]interface{}
+		jsonErr := json.Unmarshal(body, &body1)
+		if jsonErr != nil {
+			log.Fatal(jsonErr)
+			return []BibleId{}
+		}
+		bibleData := body1["data"].([]interface{}) //[0].(map[string]interface{})
+
+		for i := 0; i < len(bibleData); i++ {
+			//if bibleData[i].(map[string]interface{})["language"].(map[string]interface{})["name"].(string) == "English" {
+			//fmt.Println(bibleData[i].(map[string]interface{})["name"].(string))
+			//}
+			bibleIds = append(bibleIds, BibleId{
+				Id:   bibleData[i].(map[string]interface{})["id"].(string),
+				Name: bibleData[i].(map[string]interface{})["name"].(string),
+			})
+		}
 	}
 	//fmt.Println(bibleData["name"].(string))
+	dbName := "file:./test.db"
+
+	db, err := sql.Open("libsql", dbName)
+	if err != nil {
+		log.Fatal(err)
+		//os.Exit(1)
+	}
+	rows, err := db.Query("select id, name from translations where language_code = ?", langid)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+		err := rows.Scan(&language_code, &language)
+		if err != nil {
+			log.Fatal(err)
+		}
+		//log.Println(language_code, language)
+		bibleIds = append(bibleIds, BibleId{
+			Id:   language_code,
+			Name: language,
+		})
+	}
+	err = rows.Err()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
 
 	return bibleIds
 }
